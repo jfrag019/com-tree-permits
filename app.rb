@@ -7,7 +7,7 @@ get '/tree-permits' do
 	url = URI('https://data.miamigov.com/resource/mwh4-hkbb.json')
 	thisWeek = Date.today-7
 	url.query = Faraday::Utils.build_query(
-		'$order' => 'PlanNumber DESC',
+		'$order' => 'plannumber DESC',
     		'$limit' => 1000,
 		'$where' => "plannumber IS NOT NULL" +
 		" AND reviewstatus = 'Approved' OR reviewstatus = 'Intended decision'"+
