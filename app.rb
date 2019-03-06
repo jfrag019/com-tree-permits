@@ -3,7 +3,7 @@ require 'sinatra'
 
 #time_zone = ActiveSupport::TimeZone["Eastern Time (US & Canada)"]
 
-get '/building-permits' do
+get '/tree-permits' do
 	url = URI('https://data.miamigov.com/resource/mwh4-hkbb.json)
 	thisWeek = Date.today-7
 	url.query = Faraday::Utils.build_query(
