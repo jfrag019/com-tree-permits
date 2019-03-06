@@ -20,7 +20,7 @@ collection = JSON.parse(response.body)
   
   features = collection.map do |record|
 title =
-      "A new tree permit (#{record['plannumber']}) with the status: #{record['reviewstatus']} has been issued at #{record['propertyaddress']}."
+      "A new tree permit (#{record['plannumber']}) with the status: '#{record['reviewstatus']}'  has been issued at #{record['propertyaddress']}."
 
   {
     'id' => record['plannumber'],
