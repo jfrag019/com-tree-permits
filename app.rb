@@ -21,13 +21,12 @@ collection = JSON.parse(response.body)
 
 features = collection['features'].map do |record|
 
+	id = "#{record['properties']['ID']}"
 
-title ="A new tree permit (#{record['properties']['PlanNumber']}) with the status: '#{record['properties']['ReviewStatus']}' has been issued at #{record['properties']['PropertyAddress']}."
+	title ="A new tree permit (#{record['properties']['PlanNumber']}) with the status: '#{record['properties']['ReviewStatus']}' has been issued at #{record['properties']['PropertyAddress']}."
 
-  {
-    'properties' => record.merge('title' => title)
-  }
-  end
+	record.merge('id' => id, 'title' => title)
+end
   
   content_type :json
   JSON.pretty_generate('type' => 'FeatureCollection', 'features' => features)
