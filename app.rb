@@ -4,7 +4,7 @@ require 'sinatra'
 #time_zone = ActiveSupport::TimeZone["Eastern Time (US & Canada)"]
 
 get '/tree-permits' do
-	url = URI('https://services1.arcgis.com/CvuPhqcTQpZPT9qY/arcgis/rest/services/Tree_Permits/FeatureServer/0/query?where=1%3D1&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&resultType=none&distance=0.0&units=esriSRUnit_Meter&returnGeodetic=false&outFields=*&returnGeometry=true&multipatchOption=xyFootprint&maxAllowableOffset=&geometryPrecision=&outSR=&datumTransformation=&applyVCSProjection=false&returnIdsOnly=false&returnUniqueIdsOnly=false&returnCountOnly=false&returnExtentOnly=false&returnDistinctValues=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&having=&resultOffset=&resultRecordCount=&returnZ=false&returnM=false&returnExceededLimitFeatures=true&quantizationParameters=&sqlFormat=none&f=pgeojson&token=')
+	url = URI('https://opendata.arcgis.com/datasets/f92460468c17413d8b2fb42a2c1df4d2_0.geojson')
 	thisWeek = Date.today-7
 	url.query = Faraday::Utils.build_query(
 		'$order' => 'PlanNumber DESC',
@@ -18,21 +18,15 @@ response = connection.get
 
 collection = JSON.parse(response.body)
   
-  features = collection.map do |record|
-title =
-      "A new tree permit (#{record['PlanNumber']}) with the status: '#{record['ReviewStatus']}' has been issued at #{record['PropertyAddress']}."
+
+features = collection['features'].map do |record|
+
+
+title ="A new tree permit (#{record['properties']['PlanNumber']}) with the status: '#{record['properties']['ReviewStatus']}' has been issued at #{record['properties']['PropertyAddress']}."
 
   {
-    'id' => record['PlanNumber'],
-    'type' => 'Feature',
-    'properties' => record.merge('title' => title),
-    'geometry' => {
-        'type' => 'Point',
-        'coordinates' => [
-          record['Longitude'].to_f,
-          record['Latitude'].to_f
-        ]
-      }
+    #'id' => record['properties']['ID'],
+    'properties' => record.merge('title' => title)
   }
   end
   
