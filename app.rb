@@ -29,8 +29,8 @@ title =
     'geometry' => {
         'type' => 'Point',
         'coordinates' => [
-          record['x'].to_f,
-          record['y'].to_f
+          record['Longitude'].to_f,
+          record['Latitude'].to_f
         ]
       }
   }
