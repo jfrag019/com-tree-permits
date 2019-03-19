@@ -25,7 +25,15 @@ features = collection['features'].map do |record|
 
 	title ="A new tree permit (#{record['properties']['PlanNumber']}) with the status: '#{record['properties']['ReviewStatus']}' has been issued at #{record['properties']['PropertyAddress']}."
 
-	record.merge('id' => id, 'title' => title)
+
+{
+    'id' => id,
+    'type' => 'Feature',
+    'properties' => record['properties'].merge('title' => title),
+    'geometry' => record['geometry']
+  }
+	
+
 end
   
   content_type :json
