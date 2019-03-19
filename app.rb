@@ -4,14 +4,14 @@ require 'sinatra'
 #time_zone = ActiveSupport::TimeZone["Eastern Time (US & Canada)"]
 
 get '/tree-permits' do
-	url = URI('https://data.miamigov.com/resource/mwh4-hkbb.json')
+	url = URI('https://services1.arcgis.com/CvuPhqcTQpZPT9qY/arcgis/rest/services/Tree_Permits/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json')
 	thisWeek = Date.today-7
 	url.query = Faraday::Utils.build_query(
-		'$order' => 'plannumber DESC',
+		'$order' => 'PlanNumber DESC',
     		'$limit' => 1000,
-		'$where' => "plannumber IS NOT NULL" +
-		" AND reviewstatus = 'Approved' OR reviewstatus = 'Intended decision'"+
-		" AND propertyaddress IS NOT NULL")
+		'$where' => "PlanNumber IS NOT NULL" +
+		" AND ReviewStatus = 'Approved' OR ReviewStatus = 'Intended decision'"+
+		" AND PropertyAddress IS NOT NULL")
 
 connection = Faraday.new(url: url.to_s)
 response = connection.get
@@ -20,17 +20,17 @@ collection = JSON.parse(response.body)
   
   features = collection.map do |record|
 title =
-      "A new tree permit (#{record['plannumber']}) with the status: '#{record['reviewstatus']}' has been issued at #{record['propertyaddress']}."
+      "A new tree permit (#{record['PlanNumber']}) with the status: '#{record['ReviewStatus']}' has been issued at #{record['PropertyAddress']}."
 
   {
-    'id' => record['plannumber'],
+    'id' => record['PlanNumber'],
     'type' => 'Feature',
     'properties' => record.merge('title' => title),
     'geometry' => {
         'type' => 'Point',
         'coordinates' => [
-          record['longitude'].to_f,
-          record['latitude'].to_f
+          record['x'].to_f,
+          record['y'].to_f
         ]
       }
   }
