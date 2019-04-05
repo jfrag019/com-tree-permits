@@ -26,7 +26,13 @@ features = collection['features'].map do |record|
     'id' => id,
     'type' => 'Feature',
     'properties' => record['properties'].merge('title' => title),
-    'geometry' => record['geometry']
+    'geometry' => {
+        'type' => 'Point',
+        'coordinates' => [
+          record['properties']['Longitude'].to_f,
+          record['properties']['Latitude'].to_f
+        ]
+      }
   }
 	
 
