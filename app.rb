@@ -3,8 +3,8 @@ require 'rest-client'
 
 get '/tree-permits' do
 
-today = Date.today-11
-twoDaysBefore = Date.today-10
+today = Date.today-8
+twoDaysBefore = Date.today-7
 
 today_s = today.strftime("%F")
 twoDaysBefore_s = twoDaysBefore.strftime("%F")
