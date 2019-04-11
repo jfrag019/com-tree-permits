@@ -4,7 +4,7 @@ require 'rest-client'
 get '/tree-permits' do
 
 today = Date.today-8
-twoDaysBefore = Date.today-10
+twoDaysBefore = Date.today-9
 
 today_s = today.strftime("%F")
 twoDaysBefore_s = twoDaysBefore.strftime("%F")
