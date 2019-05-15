@@ -19,8 +19,7 @@ features = collection['features'].map do |record|
 
 	id = "#{record['properties']['ID']}"
 
-	title ="There is tree activity at #{record['properties']['PropertyAddress']} for process number #{record['properties']['PlanNumber']}. The current status is #{record['properties']['ReviewStatus']}."
-
+	title ="New Tree Activity @ #{record['properties']['PropertyAddress']} (#{record['properties']['PlanNumber']}) with a status of #{record['properties']['ReviewStatus']}. For more, visit miamigov.com & search Intended Decision"
 
 {
     'id' => id,
